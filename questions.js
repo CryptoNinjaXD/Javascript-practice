@@ -21,26 +21,26 @@
 // console.log(outt);
 
 //q4
-const input4 = [8547, 12345, 9856, 11254, 7856, 10999, 7856];
-let step = [];
-const filters = input4.filter((nest) => nest > 10000);
-console.log(JSON.parse(JSON.stringify(filters)));
-console.log(typeof filters);
+// const input4 = [8547, 12345, 9856, 11254, 7856, 10999, 7856];
+// let step = [];
+// const filters = input4.filter((nest) => nest > 10000);
+// console.log(JSON.parse(JSON.stringify(filters)));
+// console.log(typeof filters);
 
 //q5
 // Expected output: [{name: 'Book', price: 20}, {name: 'Pen', price: 5}, {name: 'Notebook', price: 15}]
 
-const input5 = [
-  { name: "Book", price: 20 },
-  { name: "Pen", price: 5 },
-  { name: "Laptop", price: 800 },
-  { name: "Notebook", price: 15 },
-];
-function check(products, priceMax) {
-  return products.filter((product) => product.price < priceMax);
-}
-const priceUnder50 = check(input5, 50);
-console.log(priceUnder50);
+// const input5 = [
+//   { name: "Book", price: 20 },
+//   { name: "Pen", price: 5 },
+//   { name: "Laptop", price: 800 },
+//   { name: "Notebook", price: 15 },
+// ];
+// function check(products, priceMax) {
+//   return products.filter((product) => product.price < priceMax);
+// }
+// const priceUnder50 = check(input5, 50);
+// console.log(priceUnder50);
 
 //q6
 //Given an array of objects representing students, calculate the average age of students for each grade
@@ -52,6 +52,21 @@ const input6 = [
   { name: "Mary", age: 14, grade: "9th" },
   { name: "Bob", age: 16, grade: "11th" },
 ];
+
+let getGrade = input6;
+
+for (let i = 0; i < getGrade.length; i++) {
+  if (getGrade[i].grade == "10th") {
+    let averageGrade = 0;
+    averageGrade = averageGrade + getGrade[i].age;
+
+    console.log(averageGrade);
+  }
+}
+
+//split
+let a = "lets play bro".split(" ");
+console.log(a);
 
 //solid squar
 // for (let i = 1; i < 6; i++) {
