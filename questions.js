@@ -64,9 +64,20 @@ for (let i = 0; i < getGrade.length; i++) {
   }
 }
 
-//split
-let a = "lets play bro".split(" ");
-console.log(a);
+//.split .reverse .join
+// let a = "lets play bro".split(" ");
+// console.log(a);
+
+// Question 7
+// Given an array of numbers, find the length of the longest sequence of consecutive increasing
+// Expected output: 4 (sequence: 2,3,4,5)
+
+const input7 = [1, 2, 3, 1, 2, 3, 4, 2, 3, 4, 5];
+for (let range = 1; (range = input7.length); range++) {
+  tmp = 0;
+  take = input7[range] < input7[range + tmp];
+  console.log(range);
+}
 
 //solid squar
 // for (let i = 1; i < 6; i++) {
