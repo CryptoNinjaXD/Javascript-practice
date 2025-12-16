@@ -100,109 +100,168 @@
 // export default Login;
 
 //---------------------------------------------------------------------------------------------------------
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // API Endpoint
-const API_URL = "https://jsonplaceholder.typicode.com/users";
+// const API_URL = "https://jsonplaceholder.typicode.com/users";
 
-const UserTable = () => {
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+// const UserTable = () => {
+//   const [users, setUsers] = useState([]);
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log("Fetching data... waiting 5 seconds...");
-        await new Promise((resolve) => setTimeout(resolve, 5000));
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         console.log("Fetching data... waiting 5 seconds...");
+//         await new Promise((resolve) => setTimeout(resolve, 5000));
 
-        const response = await fetch(API_URL);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+//         const response = await fetch(API_URL);
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+//         const data = await response.json();
 
-        setUsers(data);
-        setError(null);
-      } catch (e) {
-        setError("Failed to fetch data: " + e.message);
-        console.error("Fetch error: ", e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+//         setUsers(data);
+//         setError(null);
+//       } catch (e) {
+//         setError("Failed to fetch data: " + e.message);
+//         console.error("Fetch error: ", e);
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
 
-    fetchData();
-  }, []);
+//     fetchData();
+//   }, []);
 
-  const handleDelete = (userId) => {
-    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
-    console.log(`User with ID ${userId} deleted locally.`);
+//   const handleDelete = (userId) => {
+//     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+//     console.log(`User with ID ${userId} deleted locally.`);
+//   };
+
+//   if (isLoading) {
+//     return (
+//       <div style={{ padding: "20px", textAlign: "center" }}>
+//         <h2>Loading Data...</h2>
+//         <p>Please wait 5 seconds for the data to load from the API.</p>
+
+//         <div
+//           style={{
+//             border: "5px solid #f3f3f3",
+//             borderTop: "5px solid #3498db",
+//             borderRadius: "50%",
+//             width: "40px",
+//             height: "40px",
+//             animation: "spin 2s linear infinite",
+//             margin: "20px auto",
+//           }}
+//         ></div>
+//       </div>
+//     );
+//   }
+
+//   if (error) {
+//     return <div style={{ color: "red", padding: "20px" }}>Error: {error}</div>;
+//   }
+
+//   if (users.length === 0) {
+//     return <div style={{ padding: "20px" }}>No users found.</div>;
+//   }
+
+//   return (
+//     <div style={{ padding: "20px" }}>
+//       <h1>User Directory</h1>
+//       <table style={tableStyle}>
+//         <thead>
+//           <tr>
+//             <th style={thStyle}>ID</th>
+//             <th style={thStyle}>Name</th>
+//             <th style={thStyle}>Username</th>
+//             <th style={thStyle}>Email</th>
+//             <th style={thStyle}>Action</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {users.map((user) => (
+//             <tr key={user.id}>
+//               <td style={tdStyle}>{user.id}</td>
+//               <td style={tdStyle}>{user.name}</td>
+//               <td style={tdStyle}>{user.username}</td>
+//               <td style={tdStyle}>{user.email}</td>
+//               <td style={tdStyle}>
+//                 <button
+//                   onClick={() => handleDelete(user.id)}
+//                   style={deleteButtonStyle}
+//                 >
+//                   Delete
+//                 </button>
+//               </td>
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// };
+
+// export default UserTab
+
+function SimpleTimerCounter() {
+  const [count, setCount] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef(null);
+
+  const handleStart = () => {
+    if (!isRunning) {
+      setIsRunning(true);
+
+      intervalRef.current = setInterval(() => {
+        setCount((prevCount) => prevCount + 1);
+      }, 1);
+
+      console.log("Timer Started");
+    }
   };
 
-  if (isLoading) {
-    return (
-      <div style={{ padding: "20px", textAlign: "center" }}>
-        <h2>Loading Data...</h2>
-        <p>Please wait 5 seconds for the data to load from the API.</p>
+  const handleStop = () => {
+    if (isRunning) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+      setIsRunning(false);
+      console.log("Timer Stopped");
+    }
+  };
 
-        <div
-          style={{
-            border: "5px solid #f3f3f3",
-            borderTop: "5px solid #3498db",
-            borderRadius: "50%",
-            width: "40px",
-            height: "40px",
-            animation: "spin 2s linear infinite",
-            margin: "20px auto",
-          }}
-        ></div>
-      </div>
-    );
-  }
+  const handleReset = () => {
+    handleStop();
+    setCount(0);
+    console.log("Timer Reset");
+  };
 
-  if (error) {
-    return <div style={{ color: "red", padding: "20px" }}>Error: {error}</div>;
-  }
-
-  if (users.length === 0) {
-    return <div style={{ padding: "20px" }}>No users found.</div>;
-  }
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        console.log("Component Unmounted - Interval Cleared");
+      }
+    };
+  }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>User Directory</h1>
-      <table style={tableStyle}>
-        <thead>
-          <tr>
-            <th style={thStyle}>ID</th>
-            <th style={thStyle}>Name</th>
-            <th style={thStyle}>Username</th>
-            <th style={thStyle}>Email</th>
-            <th style={thStyle}>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td style={tdStyle}>{user.id}</td>
-              <td style={tdStyle}>{user.name}</td>
-              <td style={tdStyle}>{user.username}</td>
-              <td style={tdStyle}>{user.email}</td>
-              <td style={tdStyle}>
-                <button
-                  onClick={() => handleDelete(user.id)}
-                  style={deleteButtonStyle}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div>
+      <center>
+        <h1>Simple Counter</h1>
+        <h2>Count: {count}</h2>
+
+        <div>
+          <button onClick={handleStart}>Start</button>
+          <button onClick={handleStop}>Stop</button>
+          <button onClick={handleReset}>Reset</button>
+        </div>
+      </center>
     </div>
   );
-};
+}
 
-export default UserTable;
+export default SimpleTimerCounter;
