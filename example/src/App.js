@@ -100,7 +100,7 @@
 // export default Login;
 
 //---------------------------------------------------------------------------------------------------------
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useContext, useState, createContext } from "react";
 
 // API Endpoint
 // const API_URL = "https://jsonplaceholder.typicode.com/users";
@@ -207,61 +207,117 @@ import React, { useEffect, useRef, useState } from "react";
 
 // export default UserTab
 
-function SimpleTimerCounter() {
-  const [count, setCount] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const intervalRef = useRef(null);
+// function SimpleTimerCounter() {
+//   const [count, setCount] = useState(0);
+//   const [isRunning, setIsRunning] = useState(false);
+//   const intervalRef = useRef(null);
 
-  const handleStart = () => {
-    if (!isRunning) {
-      setIsRunning(true);
+//   const handleStart = () => {
+//     if (!isRunning) {
+//       setIsRunning(true);
 
-      intervalRef.current = setInterval(() => {
-        setCount((prevCount) => prevCount + 1);
-      }, 1);
+//       intervalRef.current = setInterval(() => {
+//         setCount((prevCount) => prevCount + 1);
+//       }, 1);
 
-      console.log("Timer Started");
-    }
-  };
+//       console.log("Timer Started");
+//     }
+//   };
 
-  const handleStop = () => {
-    if (isRunning) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-      setIsRunning(false);
-      console.log("Timer Stopped");
-    }
-  };
+//   const handleStop = () => {
+//     if (isRunning) {
+//       clearInterval(intervalRef.current);
+//       intervalRef.current = null;
+//       setIsRunning(false);
+//       console.log("Timer Stopped");
+//     }
+//   };
 
-  const handleReset = () => {
-    handleStop();
-    setCount(0);
-    console.log("Timer Reset");
-  };
+//   const handleReset = () => {
+//     handleStop();
+//     setCount(0);
+//     console.log("Timer Reset");
+//   };
 
-  useEffect(() => {
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        console.log("Component Unmounted - Interval Cleared");
-      }
-    };
-  }, []);
+//   useEffect(() => {
+//     return () => {
+//       if (intervalRef.current) {
+//         clearInterval(intervalRef.current);
+//         console.log("Component Unmounted - Interval Cleared");
+//       }
+//     };
+//   }, []);
+
+//   return (
+//     <div>
+//       <center>
+//         <h1>Simple Counter</h1>
+//         <h2>Count: {count}</h2>
+
+//         <div>
+//           <button onClick={handleStart}>Start</button>
+//           <button onClick={handleStop}>Stop</button>
+//           <button onClick={handleReset}>Reset</button>
+//         </div>
+//       </center>
+//     </div>
+//   );
+// }
+
+// export default SimpleTimerCounter;
+
+const ColorContext = createContext();
+
+function App() {
+  const [bgColor, setBgColor] = useState("white");
+  const [textColor, setTextColor] = useState("black");
 
   return (
-    <div>
-      <center>
-        <h1>Simple Counter</h1>
-        <h2>Count: {count}</h2>
+    <ColorContext.Provider
+      value={{ bgColor, setBgColor, textColor, setTextColor }}
+    >
+      <Main />
+    </ColorContext.Provider>
+  );
+}
 
-        <div>
-          <button onClick={handleStart}>Start</button>
-          <button onClick={handleStop}>Stop</button>
-          <button onClick={handleReset}>Reset</button>
-        </div>
-      </center>
+function Main() {
+  const { bgColor, textColor } = useContext(ColorContext);
+
+  return (
+    <div
+    className={`${theme === 'dark' ? `dark-text-color: `}`}
+      style={{
+        height: "100vh",
+        backgroundColor: bgColor,
+        color: textColor,
+        display: "flex",
+      }}
+    >
+      <h2>hello</h2>
+      <ColorButtons />
     </div>
   );
 }
 
-export default SimpleTimerCounter;
+function ColorButtons() {
+  const { bgColor, setBgColor, setTextColor } = useContext(ColorContext);
+
+  const toggleColor = () => {
+    if (bgColor === "white") {
+      setBgColor("black");
+      setTextColor("white");
+    } else {
+      setBgColor("white");
+      setTextColor("black");
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={toggleColor}>Change </button>
+    </div>
+  );
+}
+
+export default App;
