@@ -100,7 +100,7 @@
 // export default Login;
 
 //---------------------------------------------------------------------------------------------------------
-import React, { useEffect, useContext, useState, createContext } from "react";
+// import React, { useEffect, useContext, useState, createContext } from "react";
 
 // API Endpoint
 // const API_URL = "https://jsonplaceholder.typicode.com/users";
@@ -266,57 +266,128 @@ import React, { useEffect, useContext, useState, createContext } from "react";
 
 // export default SimpleTimerCounter;
 
-const ColorContext = createContext();
+// const ColorContext = createContext();
+
+// function App() {
+//   const [bgColor, setBgColor] = useState("white");
+//   const [textColor, setTextColor] = useState("black");
+
+//   return (
+//     <ColorContext.Provider
+//       value={{ bgColor, setBgColor, textColor, setTextColor }}
+//     >
+//       <Main />
+//     </ColorContext.Provider>
+//   );
+// }
+
+// function Main() {
+//   const { bgColor, textColor } = useContext(ColorContext);
+
+//   return (
+//     <div
+//     className={`${theme === 'dark' ? `dark-text-color: `}`}
+//       style={{
+//         height: "100vh",
+//         backgroundColor: bgColor,
+//         color: textColor,
+//         display: "flex",
+//       }}
+//     >
+//       <h2>hello</h2>
+//       <ColorButtons />
+//     </div>
+//   );
+// }
+
+// function ColorButtons() {
+//   const { bgColor, setBgColor, setTextColor } = useContext(ColorContext);
+
+//   const toggleColor = () => {
+//     if (bgColor === "white") {
+//       setBgColor("black");
+//       setTextColor("white");
+//     } else {
+//       setBgColor("white");
+//       setTextColor("black");
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <button onClick={toggleColor}>Change </button>
+//     </div>
+//   );
+// }
+
+// export default App;
+//------------------------------------------------------------------------------------------------------
+
+// import React, { useState } from "react";
+// import { useSelector, useDispatch } from "react-redux";
+// import { addTodo, deleteTodo } from "./todo";
+
+// function App() {
+//   const [text, setText] = useState("");
+//   const todos = useSelector((state) => state.todos);
+//   const dispatch = useDispatch();
+
+//   return (
+//     <div
+//       stylre={{
+//         padding: 120,
+//         textAlign: "center",
+//         backgroundColor: "lightgray",
+//       }}
+//     >
+//       <center>
+//         <h1>Todo List</h1>
+//         <input value={text} onChange={(e) => setText(e.target.value)} />
+//         <button
+//           onClick={() => {
+//             dispatch(addTodo(text));
+//             setText("");
+//           }}
+//         >
+//           Add
+//         </button>
+
+//         {todos.map((todo) => (
+//           <li key={todo.id}>
+//             <input type="checkbox" />
+//             {todo.text}
+//             <button onClick={() => dispatch(deleteTodo(todo.id))}>
+//               Delete
+//             </button>
+//           </li>
+//         ))}
+//       </center>
+//     </div>
+//   );
+// }
+
+// export default App;
+// src/App.js
+// src/App.jsx 
+
+//--------------------------------------------------------------------------------------
+
+import { Routes, Route } from "react-router-dom"; 
+import Navbar from "./Navbar";
+import Home from "./Home";
+import About from "./About";
+import Contact from "./Contact";
 
 function App() {
-  const [bgColor, setBgColor] = useState("white");
-  const [textColor, setTextColor] = useState("black");
-
   return (
-    <ColorContext.Provider
-      value={{ bgColor, setBgColor, textColor, setTextColor }}
-    >
-      <Main />
-    </ColorContext.Provider>
-  );
-}
-
-function Main() {
-  const { bgColor, textColor } = useContext(ColorContext);
-
-  return (
-    <div
-    className={`${theme === 'dark' ? `dark-text-color: `}`}
-      style={{
-        height: "100vh",
-        backgroundColor: bgColor,
-        color: textColor,
-        display: "flex",
-      }}
-    >
-      <h2>hello</h2>
-      <ColorButtons />
-    </div>
-  );
-}
-
-function ColorButtons() {
-  const { bgColor, setBgColor, setTextColor } = useContext(ColorContext);
-
-  const toggleColor = () => {
-    if (bgColor === "white") {
-      setBgColor("black");
-      setTextColor("white");
-    } else {
-      setBgColor("white");
-      setTextColor("black");
-    }
-  };
-
-  return (
-    <div>
-      <button onClick={toggleColor}>Change </button>
-    </div>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </>
   );
 }
 
